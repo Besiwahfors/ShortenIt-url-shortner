@@ -1,5 +1,6 @@
 import Link from '../models/linkModels.js';
 import generateShortCode from '../utils/generateShortcode.js';
+import QRCode from 'qrcode';
 
 // Shorten a long URL
 export const shortenUrl = async (req, res) => {
@@ -42,19 +43,45 @@ export const deleteLink = async (req, res) => {
   }
 };
 
-// Redirect to original URL associated with the short code
-export const redirectShortLink = async (req, res) => {
+
+
+  
+  // Redirect to original URL associated with the short code and increase link clicks
+  export const redirectShortLink = async (req, res) => {
+    try {
+      const { shortCode } = req.params;
+      const link = await Link.findOneAndUpdate(
+        { shortCode },
+        { $inc: { clicks: 1 } },
+        { new: true }
+      );
+      if (!link) {
+        return res.status(404).json({ message: 'Short link not found' });
+      }
+      
+      // Redirect to the original URL with status code 308
+      res.redirect(308, link.url);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
+  // Generate QR code for a short link
+  export const generateQRCode = async (req, res) => {
     try {
       const { shortCode } = req.params;
       const link = await Link.findOne({ shortCode });
       if (!link) {
         return res.status(404).json({ message: 'Short link not found' });
       }
-
-      // Redirect to the original URL with status code 308
-      res.redirect(308, link.url); 
+      const qrCodeData = link.url;
+      const qrCodeUrl = await QRCode.toDataURL(qrCodeData);
+      res.json({ qrCodeUrl });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
     }
   };
+  
+  
