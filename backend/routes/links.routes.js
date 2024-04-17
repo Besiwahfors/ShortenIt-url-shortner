@@ -4,7 +4,7 @@ import { Router } from "express";
 const router = Router();
 
 // Define routes
-router.post("/api/links", async (req, res) => {
+router.post("/api/links", (req, res) => {
   res.json("Shorten a long URL");
 });
 
