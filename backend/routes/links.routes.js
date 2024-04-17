@@ -1,24 +1,17 @@
 import { Router } from "express";
+import { shortenUrl, getAllLinks, deleteLink, redirectShortLink } from '../controllers/link.controller.js';
 
 // Declare router
 const router = Router();
 
 // Define routes
-router.post("/api/links", (req, res) => {
-  res.json("Shorten a long URL");
-});
+router.post("/", shortenUrl);
 
-router.get("/api/links",(req, res) => {
-  res.json("Get all existing short links to display");
-});
+router.get("/",getAllLinks);
 
-router.delete("/api/links/:id", (req, res) => {
-  res.json("Delete an existing short link");
-});
+router.delete("/:id",deleteLink);
 
-router.get("/api/links/:shortCode", (req, res) => {
-  res.json("Visit a short link for redirection");
-});
+router.get("/:shortCode",redirectShortLink );
 
 // Export router as default
 export default router;

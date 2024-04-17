@@ -1,24 +1,17 @@
 import { Router } from "express";
+import { register, login, getUserInfo, logout } from '../controllers/user.controller.js';
 
 // Declare router
 const router = Router();
 
 // Define routes
-router.post("/api/users/register", (req, res) => {
-  res.json("Register new user");
-});
+router.post("/register", register);
 
-router.post("/api/users/login", (req, res) => {
-  res.json("Login existing user");
-});
+router.post("/login", login);
 
-router.get("/api/users/me", (req, res) => {
-  res.json("Get logged in user profile");
-});
+router.get("/me",getUserInfo);
 
-router.post("/api/users/logout", (req, res) => {
-  res.json("Logout a logged in user");
-});
+router.post("/logout", logout);
 
 // Export router as default
 export default router;
