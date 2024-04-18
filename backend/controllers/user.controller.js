@@ -1,6 +1,6 @@
+import jwt from 'jsonwebtoken';
 import User from '../models/userModels.js';
 import bcrypt from 'bcryptjs';
-
 
 // Register new user
 export const register = async (req, res) => {
@@ -46,9 +46,9 @@ export const login = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Incorrect password' });
     }
-    // Store user in session 
-    // req.session.user = user; 
-    res.json({ message: 'Login successful' });
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_CODE, { expiresIn: '1h' });
+    res.json({ message: 'Login successful', token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
@@ -56,15 +56,32 @@ export const login = async (req, res) => {
 };
 
 // Get user info for logged in user
-export const getUserInfo = (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ message: 'Unauthorized' });
+export const getUserInfo = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_CODE);
+    const userId = decodedToken.userId;
+    
+    // Find user by ID
+    const singleUser = await User.findById(userId);
+    if (!singleUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return user info
+    res.status(200).json({
+      id: singleUser._id,
+      email: singleUser.email,
+      username: singleUser.username
+    });
+  } catch (error) {
+    console.error('Error in getUserInfo:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
-  res.json({ user: req.session.user });
 };
 
-// Logout a logged in user
+// Logout a logged in user 
 export const logout = (req, res) => {
-  req.session.destroy();
+  
   res.json({ message: 'Logout successful' });
 };

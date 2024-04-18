@@ -5,6 +5,7 @@ import usersRoutes from "./routes/users.routes.js";
 import linkRoutes from "./routes/links.routes.js";
 import mongoose from "mongoose";
 
+
 // Load env variables with dotenv
 dotenv.config({path:[".env"]});
 
@@ -26,7 +27,7 @@ app.use((err, req, res, next) => {
 
 // Use routes in express app
 app.use(usersRoutes);
-app.use('/shortenit', linkRoutes);
+app.use('/api', linkRoutes);
 
 
 try {
@@ -42,5 +43,5 @@ try {
 // Always nice to have your PORT set in the environment variables file
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
-  console.log("Server is running");
+ console.log(`Server is running on port ${port}`);
 });
