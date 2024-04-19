@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { register, login, getUserInfo, logout } from '../controllers/user.controller.js';
+import {
+  register,
+  login,
+  getUserInfo,
+  logout,
+} from "../controllers/user.controller.js";
+import { verifyToken } from "../middlewares/auth.js";
 
 // Declare router
 const router = Router();
@@ -9,9 +15,9 @@ router.post("/register", register);
 
 router.post("/login", login);
 
-router.get("/me",getUserInfo);
+router.get("/me", verifyToken, getUserInfo);
 
-router.post("/logout", logout);
+router.post("/logout", verifyToken, logout);
 
 // Export router as default
 export default router;
