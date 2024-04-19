@@ -5,7 +5,7 @@ import { shortenUrl, getAllLinks, deleteLink, redirectShortLink } from '../contr
 const router = Router();
 
 // Define routes
-router.post("/", shortenUrl);
+router.post("/:userId", shortenUrl);
 
 router.get("/",getAllLinks);
 
