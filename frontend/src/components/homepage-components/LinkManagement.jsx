@@ -67,7 +67,7 @@ const LinkManagementTeaser = () => {
                 <p className="text-sm">{link.shortUrl}</p>
               </div>
               <div className="flex justify-center items-center mt-4">
-                <FaQrcode className="text-white mr-2" size={40} />
+                <FaQrcode className="text-white mr-2" size={48} />
                 <p className="text-sm">Get a QR Code</p>
               </div>
             </motion.div>

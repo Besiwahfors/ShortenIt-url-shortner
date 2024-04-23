@@ -1,26 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import signupImage from "../assets/images/url.svg"; // Import your image file
 
 const Signup = () => {
   return (
-    <div className="bg-gradient-to-r from-blue-900 to-white min-h-screen flex flex-col justify-center items-center">
+    <div className="min-h-screen flex flex-col md:flex-row justify-center items-center">
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full"
+        className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full md:mr-8"
       >
         <h2 className="text-3xl font-bold mb-8 text-blue-900 text-center">
           Create an Account
         </h2>
-        <form className="space-y-4">
+        <form className="space-y-6"> {/* Increased space between form elements */}
           <div>
             <input
               type="text"
               id="username"
               placeholder="Username"
-              className="w-full border-b-2 border-blue-900 py-2 px-3 focus:outline-none focus:border-blue-500 rounded-md"
+              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none focus:border-blue-500 rounded-md"
             />
           </div>
           <div>
@@ -28,7 +29,7 @@ const Signup = () => {
               type="email"
               id="email"
               placeholder="Email"
-              className="w-full border-b-2 border-blue-900 py-2 px-3 focus:outline-none focus:border-blue-500 rounded-md"
+              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none focus:border-blue-500 rounded-md"
             />
           </div>
           <div>
@@ -36,7 +37,7 @@ const Signup = () => {
               type="password"
               id="password"
               placeholder="Password"
-              className="w-full border-b-2 border-blue-900 py-2 px-3 focus:outline-none focus:border-blue-500 rounded-md"
+              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none focus:border-blue-500 rounded-md"
             />
           </div>
           <div>
@@ -44,7 +45,7 @@ const Signup = () => {
               type="password"
               id="confirmPassword"
               placeholder="Confirm Password"
-              className="w-full border-b-2 border-blue-900 py-2 px-3 focus:outline-none focus:border-blue-500 rounded-md"
+              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none focus:border-blue-500 rounded-md"
             />
           </div>
           <div>
@@ -63,6 +64,11 @@ const Signup = () => {
           </Link>
         </p>
       </motion.div>
+      <img
+        src={signupImage}
+        alt="Signup"
+        className="w-1/2 md:w-1/3 h-auto max-w-xs" 
+      />
     </div>
   );
 };
