@@ -43,7 +43,7 @@ export const getAllLinks = async (req, res) => {
           shortCode: link.shortCode,
           longUrl: link.longUrl,
           clicks: link.clicks,
-          shortLink: `${req.hostname}/${link.shortCode}`,
+          shortLink: `${req.protocol}://${req.headers.host}/links/${link.shortCode}`,
         };
       })
     );

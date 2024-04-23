@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const Navbar = () => {
-  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -12,16 +11,15 @@ const Navbar = () => {
   return (
     <nav className="bg-blue-900 py-4 sticky top-0 z-10">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center">
-          <a href="/" className="text-white text-2xl font-bold">
-            ShortenIt
+        <div>
+          <a href="/" className="text-white text-3xl font-bold">
+            ShrinkIt
           </a>
         </div>
         <div className="md:hidden">
-          
           <button className="text-white focus:outline-none" onClick={toggleMobileMenu}>
             <svg
-              className="w-6 h-6"
+              className="w-8 h-8"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -36,21 +34,80 @@ const Navbar = () => {
             </svg>
           </button>
         </div>
-        <div className={`md:flex items-center space-x-4 md:space-x-8 ${isMobileMenuOpen ? 'block' : 'hidden'}`}>
-          
-          <a href="#" className="text-white hover:text-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:bg-white px-3 py-2 rounded-md">
+        <motion.div
+          className={`md:flex items-center space-x-4 md:space-x-8 ${
+            isMobileMenuOpen ? 'block' : 'hidden'
+          }`}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.a
+            href="#"
+            className="nav-link text-white text-lg transition duration-300 ease-in-out"
+            whileHover={{
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              scale: 1.1,
+              borderRadius: '4px',
+              padding: '8px 16px',
+            }}
+          >
             Home
-          </a>
-          <a href="#" className="text-white hover:text-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:bg-white px-3 py-2 rounded-md">
-            Sign Up
-          </a>
-          <a href="#" className="text-white hover:text-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:bg-white px-3 py-2 rounded-md">
-            Login
-          </a>
-          <a href="#" className="text-white hover:text-black transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110 hover:bg-white px-3 py-2 rounded-md">
+          </motion.a>
+          <motion.a
+            href="#"
+            className="nav-link text-white text-lg transition duration-300 ease-in-out"
+            whileHover={{
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              scale: 1.1,
+              borderRadius: '4px',
+              padding: '8px 16px',
+            }}
+          >
+            Features
+          </motion.a>
+          <motion.a
+            href="#"
+            className="nav-link text-white text-lg transition duration-300 ease-in-out"
+            whileHover={{
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              scale: 1.1,
+              borderRadius: '4px',
+              padding: '8px 16px',
+            }}
+          >
+            Pricing
+          </motion.a>
+          <motion.a
+            href="/pricing"
+            className="nav-link text-white text-lg transition duration-300 ease-in-out"
+            whileHover={{
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              scale: 1.1,
+              borderRadius: '4px',
+              padding: '8px 16px',
+            }}
+          >
+            Testimonials
+          </motion.a>
+          <motion.a
+            href="#"
+            className="nav-link text-white text-lg transition duration-300 ease-in-out"
+            whileHover={{
+              backgroundColor: '#FFFFFF',
+              color: '#000000',
+              scale: 1.1,
+              borderRadius: '4px',
+              padding: '8px 16px',
+            }}
+          >
             Contact
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
       </div>
     </nav>
   );
