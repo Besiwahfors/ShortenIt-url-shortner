@@ -1,8 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const { username, password } = formData;
+
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        "http://localhost:4000/api/users/login",
+        formData
+      );
+      console.log(res.data);
+      // Check if login was successful
+      if (res.data && res.data.token) {
+        // Save the token to local storage or session storage for future requests
+        localStorage.setItem("token", res.data.token);
+
+        // Fetch user info to get the user's unique identifier (e.g., user ID or username)
+        const userInfoRes = await axios.get(
+          "http://localhost:4000/api/users/me",
+          {
+            headers: {
+              Authorization: `Bearer ${res.data.token}`,
+            },
+          }
+        );
+        const userId = userInfoRes.data.id; // Assuming the backend returns the user's ID
+        console.log("User ID:", userId);
+
+        // Construct the URL for the user's personalized dashboard
+        const userProfileUrl = `/userprofile/${userId}`; // Update the route as per your application
+        console.log("User Profile URL:", userProfileUrl);
+
+        // Redirect the user to their personalized dashboard
+        window.location.href = userProfileUrl;
+      } else {
+        console.error("Login failed: Invalid response data");
+      }
+    } catch (err) {
+      console.error(err.response.data);
+      // Handle error
+    }
+  };
+
   return (
     <div className="bg-gradient-to-r from-blue-900 to-white min-h-screen flex flex-col justify-center items-center">
       <motion.div
@@ -14,12 +65,14 @@ const Login = () => {
         <h2 className="text-3xl font-bold mb-8 text-blue-900 text-center">
           Log In
         </h2>
-        <form className="space-y-4">
+        <form onSubmit={onSubmit} className="space-y-4">
           <div>
             <input
-              type="email"
-              id="email"
-              placeholder="Email"
+              type="text"
+              id="username"
+              placeholder="Username"
+              value={username}
+              onChange={onChange}
               className="w-full border-b-2 border-blue-900 py-2 px-3 focus:outline-none focus:border-blue-500 rounded-md"
             />
           </div>
@@ -28,6 +81,8 @@ const Login = () => {
               type="password"
               id="password"
               placeholder="Password"
+              value={password}
+              onChange={onChange}
               className="w-full border-b-2 border-blue-900 py-2 px-3 focus:outline-none focus:border-blue-500 rounded-md"
             />
           </div>

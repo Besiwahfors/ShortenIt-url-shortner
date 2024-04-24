@@ -55,17 +55,12 @@ const Pricing = () => {
             <p className="text-3xl font-bold mb-6">
               $9.99<span className="text-gray-500 text-lg">/month</span>
             </p>
-            <button className="bg-black text-white border border-white px-8 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-900 transition duration-300">
+            <button className="bg-blue text-black border border-black px-8 py-3 rounded-lg font-semibold shadow-md hover:bg-blue transition duration-300">
               Subscribe
             </button>
           </motion.div>
         </div>
-        <motion.div
-          className="bg-black h-10 w-10 mt-8 mx-auto"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        />
+       
       </div>
     </div>
   );

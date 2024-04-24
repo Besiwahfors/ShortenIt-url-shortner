@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   FaExternalLinkAlt,
   FaEdit,
@@ -12,17 +13,14 @@ import {
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
   const [shortenedLinks, setShortenedLinks] = useState([]);
   const [supportTickets, setSupportTickets] = useState([]);
-
+    
   useEffect(() => {
-    // Fetch user data from backend API
     fetchUserData();
-
-    // Fetch shortened links from backend API
+    
     fetchShortenedLinks();
-
-    // Mock support tickets data
     setSupportTickets([
       {
         id: 1,
@@ -41,54 +39,77 @@ const UserProfile = () => {
     ]);
   }, []);
 
-  const fetchUserData = () => {
-    
-    setUser({
-      username: "Stif",
-      email: "pribeson121@gmail",
-    });
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem("token"); // Assuming you're storing the token in localStorage
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const response = await axios.get(
+        "http://localhost:4000/api/users/me",
+        config
+      );
+
+      setUser(response.data);
+      setError(null);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setError(error.message);
+    }
   };
 
-  const fetchShortenedLinks = () => {
-    
-    setShortenedLinks([
-      {
-        id: 1,
-        name: "Example Link",
-        description: "This is an example link",
-        originalUrl: "https://.com",
-        shortUrl: "ww.com",
-        date: "2024-04-16",
-      },
-      {
-        id: 2,
-        name: "Another Example",
-        description: "This is another example link",
-        originalUrl: "https://.org",
-        shortUrl: "www.com",
-        date: "2024-04-15",
-      },
-    ]);
+  const fetchShortenedLinks = async () => {
+    try {
+      const res = await axios.get("http://localhost:4000/api/links/");
+      setShortenedLinks(res.data);
+    } catch (error) {
+      console.error("Error fetching shortened links:", error);
+    }
   };
 
   const handleEditUsername = () => {
-    // edit username logic ,wednesday research it
+    // Logic for editing username
     console.log("Edit username");
   };
 
   const handleEditPassword = () => {
-    //  edit password logic ,research it
+    // Logic for editing password
     console.log("Edit password");
   };
 
   const handleEditLink = (id) => {
-    // Will add edit link name and description logic here on wednesday
+    // Logic for editing link
     console.log("Edit link with id:", id);
   };
+  const UserProfile = () => {
+   
+
+//     // Function to handle logout
+// const handleLogout = async () => {
+//   try {
+//     // Make a request to the logout endpoint on the backend
+//     const response = await axios.post("/api/users/logout");
+
+//     // Handle successful logout (clear token, redirect, etc.)
+//     console.log(response.data); // Log the logout message (optional)
+
+//     // Redirect the user to the login page
+//     window.location.href = "/login"; // Change to your actual login page route
+//   } catch (error) {
+//     // Handle errors
+//     console.error("Logout failed:", error);
+//   }}
+
+  
+   
+};
 
   return (
+   
     <div className="flex flex-col lg:flex-row lg:min-h-screen bg-gray-100">
-      
       <div className="bg-gray-800 text-white w-full lg:w-64 flex-shrink-0">
         <div className="p-4">
           <h1 className="text-2xl font-bold">Dashboard</h1>
@@ -103,12 +124,13 @@ const UserProfile = () => {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-auto p-4">
-          <Link
-            to="/logout"
-            className="block text-sm text-red-200 hover:text-white transition duration-300"
-          >
-            Logout
-          </Link>
+        <a
+        href="/logout" // Link to the logout endpoint
+        // onClick={handleLogout} // Handle logout when clicked
+        className="block text-sm text-red-200 hover:text-white transition duration-300"
+      >
+        Logout
+      </a>
         </div>
       </div>
 
@@ -135,7 +157,6 @@ const UserProfile = () => {
           </div>
         </header>
 
-        
         <div className="bg-blue-600 text-white py-2 px-4 rounded-lg shadow-lg mb-8 w-48 text-center mx-auto">
           <Link
             to="/shorten-link"
@@ -146,7 +167,6 @@ const UserProfile = () => {
           </Link>
         </div>
 
-        
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4">Your Shortened Links</h2>
           {shortenedLinks.map((link) => (
@@ -192,7 +212,7 @@ const UserProfile = () => {
               className="bg-blue-600 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center space-x-2"
             >
               <FaEye />
-              <span >View All Links</span>
+              <span>View All Links</span>
             </Link>
           </div>
         </div>
@@ -221,6 +241,7 @@ const UserProfile = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 

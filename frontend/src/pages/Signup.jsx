@@ -1,27 +1,58 @@
-import React from "react";
+
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import signupImage from "../assets/images/url.svg"; // Import your image file
+import axios from "axios";
 
 const Signup = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
+
+  const { username, email, password, confirmPassword } = formData;
+
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+
+    const onSubmit = async e => {
+      e.preventDefault();
+      console.log("onSubmit function called");
+      try {
+        const res = await axios.post("http://localhost:4000/api/users/register", formData);
+        
+        console.log("Response:", res.data);
+        // Redirect to login page after successful registration
+        window.location.href = "/login";
+      } catch (err) {
+        console.error("Error:", err.response.data);
+        // Handle error
+      }
+    };
+    
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row justify-center items-center">
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full md:mr-8"
+        className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full md:mr-8 border border-blue-500"
       >
         <h2 className="text-3xl font-bold mb-8 text-blue-900 text-center">
           Create an Account
         </h2>
-        <form className="space-y-6"> {/* Increased space between form elements */}
+        <form onSubmit={onSubmit} className="space-y-6">
           <div>
             <input
               type="text"
               id="username"
               placeholder="Username"
-              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none focus:border-blue-500 rounded-md"
+              value={username}
+              onChange={onChange}
+              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none rounded-md"
             />
           </div>
           <div>
@@ -29,7 +60,9 @@ const Signup = () => {
               type="email"
               id="email"
               placeholder="Email"
-              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none focus:border-blue-500 rounded-md"
+              value={email}
+              onChange={onChange}
+              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none rounded-md"
             />
           </div>
           <div>
@@ -37,7 +70,9 @@ const Signup = () => {
               type="password"
               id="password"
               placeholder="Password"
-              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none focus:border-blue-500 rounded-md"
+              value={password}
+              onChange={onChange}
+              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none rounded-md"
             />
           </div>
           <div>
@@ -45,7 +80,9 @@ const Signup = () => {
               type="password"
               id="confirmPassword"
               placeholder="Confirm Password"
-              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none focus:border-blue-500 rounded-md"
+              value={confirmPassword}
+              onChange={onChange}
+              className="w-full border-b-2 border-blue-900 py-3 px-3 focus:outline-none rounded-md"
             />
           </div>
           <div>
@@ -64,13 +101,9 @@ const Signup = () => {
           </Link>
         </p>
       </motion.div>
-      <img
-        src={signupImage}
-        alt="Signup"
-        className="w-1/2 md:w-1/3 h-auto max-w-xs" 
-      />
     </div>
   );
 };
 
 export default Signup;
+

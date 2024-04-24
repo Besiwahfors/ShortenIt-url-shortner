@@ -2,9 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const Hero = () => {
-  const numAnimations = 10; // Number of animations
+  const numAnimations = 10; 
 
-  // Generate random positions for animations
+ 
   const generateRandomPosition = () => {
     return {
       left: `${Math.random() * 100}%`,
@@ -13,16 +13,18 @@ const Hero = () => {
   };
 
   return (
+    <div className='relative h-screen w-full flex flex-col items-center justify-center bg-black'>
     <motion.div
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, delay: 0.5 }}
-      className="relative flex flex-col items-center justify-center h-screen bg-black overflow-hidden"
+      transition={{ duration: 2, delay: 0.5 , repeat: Infinity}}
+  
+      className="relative flex flex-col items-center justify-center h-screen w-full  overflow-hidden"
     >
-      {/* Background Animation */}
+      
       <motion.div
         className="absolute inset-0 z-[-1] overflow-hidden pointer-events-none"
-        whileHover={{ scale: 1.05 }} // Pause animation on hover
+        whileHover={{ scale: 1.05 }} 
       >
         {[...Array(numAnimations)].map((_, index) => (
           <motion.div
@@ -35,10 +37,11 @@ const Hero = () => {
             animate={{
               rotate: [0, 360],
               scale: [1, 1.5, 1],
+              
             }}
             transition={{
               duration: Math.random() * 10 + 10,
-              loop: Infinity, // Repeat the animation infinitely
+              loop: Infinity, 
               ease: 'linear',
               delay: Math.random() * 5,
             }}
@@ -49,10 +52,12 @@ const Hero = () => {
                 y: [-50, 50],
               }}
               transition={{
-                duration: Math.random() * 5 + 5,
-                loop: Infinity, // Repeat the animation infinitely
+                
+                duration: Infinity,
+                loop: Infinity, 
                 repeatType: 'reverse',
                 ease: 'easeInOut',
+                repeat: Infinity,
               }}
             />
             <motion.div
@@ -62,9 +67,10 @@ const Hero = () => {
               }}
               transition={{
                 duration: Math.random() * 5 + 5,
-                loop: Infinity, // Repeat the animation infinitely
+                loop: Infinity, 
                 repeatType: 'reverse',
                 ease: 'easeInOut',
+                repeat: Infinity,
               }}
             />
             <motion.div
@@ -74,19 +80,21 @@ const Hero = () => {
               }}
               transition={{
                 duration: Math.random() * 10 + 5,
-                loop: Infinity, // Repeat the animation infinitely
+                loop: Infinity, 
                 ease: 'linear',
                 delay: Math.random() * 5,
+                repeat: Infinity,
               }}
             />
           </motion.div>
         ))}
       </motion.div>
 
-      {/* Hero Content */}
-      <div className="relative z-10 text-white py-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
+     
+    </motion.div>
+    <div className="absolute top-0 left-0 z-10 text-white px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center h-full w-full">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 text-center">
-          Welcome to <span className="text-blue-500">Shortify!</span>
+          Welcome to <span className="text-blue-500">ShortenIt!</span>
         </h1>
         <p className="text-lg sm:text-xl lg:text-2xl mb-8 text-center">
           The ultimate URL shortener and QR code generator.
@@ -108,7 +116,7 @@ const Hero = () => {
           </motion.button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

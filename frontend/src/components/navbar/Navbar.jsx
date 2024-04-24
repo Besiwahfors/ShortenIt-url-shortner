@@ -13,7 +13,7 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center">
         <div>
           <a href="/" className="text-white text-3xl font-bold">
-            ShrinkIt
+            ShortenIt
           </a>
         </div>
         <div className="md:hidden">
