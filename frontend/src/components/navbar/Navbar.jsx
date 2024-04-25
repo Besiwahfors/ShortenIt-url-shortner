@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import logoImage from '../../assets/images/shortenit.png'; // New logo image path
+import logoImage from '../../assets/images/shortenit.png'; 
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -14,7 +14,7 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <img src={logoImage} alt="ShortenIt Logo" className="h-20 md:h-20" /> 
-          <span className="text-black text-lg md:text-2xl font-bold ml-2">ShortenIt</span> 
+          <span className="text-black text-lg md:text-3xl font-bold ml-2">ShortenIt</span> 
         </div>
         <div className="md:hidden">
           <button className="text-black focus:outline-none" onClick={toggleMobileMenu}>

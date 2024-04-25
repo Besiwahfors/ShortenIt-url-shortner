@@ -134,7 +134,7 @@ const AllLinks = () => {
                   {link.description}
                   <button
                     onClick={() => handleEditLink(link.id)}
-                    className="text-blue-700 font-semibold flex items-center hover:text-blue-900 ml-2"
+                    className="text-pink-600 font-semibold flex items-center hover:text-blue-900 ml-2"
                   >
                     <FaEdit />
                   </button>

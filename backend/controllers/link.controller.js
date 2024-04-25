@@ -77,7 +77,7 @@ export const redirectShortLink = async (req, res) => {
     if (!link) {
       return res.status(404).json({ message: "Short link not found" });
     }
-    res.redirect(308, link.url);
+    res.redirect(308, link.longUrl);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -92,7 +92,7 @@ export const generateQRCode = async (req, res) => {
     if (!link) {
       return res.status(404).json({ message: "Short link not found" });
     }
-    const qrCodeData = link.url;
+    const qrCodeData = link.longUrl;
     const qrCodeUrl = await QRCode.toDataURL(qrCodeData);
     res.json({ qrCodeUrl });
   } catch (error) {
