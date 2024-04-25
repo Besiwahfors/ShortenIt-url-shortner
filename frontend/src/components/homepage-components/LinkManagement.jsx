@@ -9,24 +9,21 @@ const LinkManagementTeaser = () => {
       longUrl: "https://example.com/very-long-url-one",
       shortUrl: "short.link/xyz123",
       name: "Project 1: Portfolio",
-
-      color: "bg-gradient-to-r from-blue-500 to-blue-700",
+      color: "from-pink-500 to-pink-700",
     },
     {
       id: 2,
-      longUrl: "https://example.com/another-very- very-very-long-url-two",
+      longUrl: "https://example.com/another-very-very-very-long-url-two",
       shortUrl: "short.link/abc456",
       name: "Project 2 : Blog",
-
-      color: "bg-gradient-to-r from-green-500 to-green-700",
+      color: "from-purple-500 to-purple-700",
     },
     {
       id: 3,
       longUrl: "https://example.com/and-yet-another-very-long-url-three",
       shortUrl: "short.link/123xyz",
       name: "Project 3 : My Facebook Link",
-
-      color: "bg-gradient-to-r from-purple-500 to-purple-700",
+      color: "from-gray-800 to-gray-900",
     },
   ];
 
@@ -50,7 +47,7 @@ const LinkManagementTeaser = () => {
           {links.map((link) => (
             <motion.div
               key={link.id}
-              className={`rounded-lg shadow-md p-6 text-white ${link.color}`}
+              className={`rounded-lg shadow-md p-6 text-white bg-gradient-to-r ${link.color}`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -74,9 +71,10 @@ const LinkManagementTeaser = () => {
           ))}
         </motion.div>
         <motion.button
+        href="/register"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold shadow-md hover:bg-blue-600 transition duration-300 mt-8"
+          className="bg-pink-600 text-white px-8 py-3 rounded-lg font-semibold shadow-md hover:bg-pink-600 transition duration-300 mt-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}

@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaRegArrowAltCircleUp, FaRegArrowAltCircleDown } from "react-icons/fa";
+
 const Statistics = () => {
   const linkClicks = {
     daily: 124,
@@ -28,7 +29,7 @@ const Statistics = () => {
         >
           Access Link Click Statistics
           <motion.div
-            className="absolute bottom-0 left-1/2 bg-blue-500 h-1 w-1/3 transform -translate-x-1/2 rounded-full"
+            className="absolute bottom-0 left-1/2 bg-purple-500 h-1 w-1/3 transform -translate-x-1/2 rounded-full"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ duration: 1, delay: 0.2 }}
@@ -36,7 +37,7 @@ const Statistics = () => {
         </motion.h2>
         <div className="flex justify-center items-center mb-8">
           <motion.div
-            className="h-1 bg-blue-500 w-16 mr-4"
+            className="h-1 bg-pink-500 w-16 mr-4"
             initial={{ width: 0 }}
             animate={{ width: "30%" }}
             transition={{ duration: 1, delay: 0.4 }}
@@ -69,7 +70,7 @@ const Statistics = () => {
                   }`}
                 >
                   {Math.abs(changeInClicks[period])}{" "}
-                  {changeInClicks[period] > 0 ? "Increase" : "Increase"}
+                  {changeInClicks[period] > 0 ? "Increase" : "Decrease"}
                 </p>
               </div>
             </motion.div>

@@ -14,7 +14,7 @@ const Pricing = () => {
         >
           Pricing Plans
           <motion.div
-            className="absolute bottom-0 left-1/2 bg-blue-500 h-1 w-1/3 transform -translate-x-1/2 rounded-full"
+            className="absolute bottom-0 left-1/2  h-1 w-1/3 transform -translate-x-1/2 rounded-full"
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ duration: 1, delay: 0.2 }}
@@ -37,7 +37,7 @@ const Pricing = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold shadow-md hover:bg-blue-600 transition duration-300"
+                className="bg-pink-600 text-white px-8 py-3 rounded-lg font-semibold shadow-md hover:bg-pink-700 transition duration-300"
               >
                 Sign Up
               </motion.button>
@@ -55,12 +55,11 @@ const Pricing = () => {
             <p className="text-3xl font-bold mb-6">
               $9.99<span className="text-gray-500 text-lg">/month</span>
             </p>
-            <button className="bg-blue text-black border border-black px-8 py-3 rounded-lg font-semibold shadow-md hover:bg-blue transition duration-300">
+            <button className="bg-transparent border border-purple-600 text-purple-600e px-8 py-3 rounded-lg font-semibold shadow-md hover:bg-purple-600 transition duration-300">
               Subscribe
             </button>
           </motion.div>
         </div>
-       
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-900 text-white py-6">
+    <footer className="bg-gray-800 text-white py-6">
       <div className="container mx-auto text-center">
         <p className="text-lg font-semibold">ShortenIt</p>
         <div className="flex justify-center items-center mt-4">
@@ -13,13 +13,13 @@ const Footer = () => {
             Home
           </a>
           <a
-            href="#"
+            href="/register"
             className="text-white hover:text-gray-200 mx-2 transition duration-300"
           >
             Sign Up
           </a>
           <a
-            href="#"
+            href="/login"
             className="text-white hover:text-gray-200 mx-2 transition duration-300"
           >
             Login

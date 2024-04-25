@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
+import loginImage from "../assets/images/login.svg"; // Import your image
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -55,53 +56,62 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-blue-900 to-white min-h-screen flex flex-col justify-center items-center">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full"
-      >
-        <h2 className="text-3xl font-bold mb-8 text-blue-900 text-center">
-          Log In
-        </h2>
-        <form onSubmit={onSubmit} className="space-y-4">
-          <div>
-            <input
-              type="text"
-              id="username"
-              placeholder="Username"
-              value={username}
-              onChange={onChange}
-              className="w-full border-b-2 border-blue-900 py-2 px-3 focus:outline-none focus:border-blue-500 rounded-md"
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              id="password"
-              placeholder="Password"
-              value={password}
-              onChange={onChange}
-              className="w-full border-b-2 border-blue-900 py-2 px-3 focus:outline-none focus:border-blue-500 rounded-md"
-            />
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="bg-blue-900 text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-800 transition duration-300 w-full"
-            >
-              Log In
-            </button>
-          </div>
-        </form>
-        <p className="mt-4 text-sm text-blue-900 text-center">
-          Don't have an account?
-          <Link to="/signup" className="text-blue-500 ml-1">
-            Sign Up
-          </Link>
-        </p>
-      </motion.div>
+    <div className="bg-gradient-to-br from-purple-700 to-pink-500 min-h-screen flex justify-center items-center">
+      <div className="bg-white rounded-lg shadow-lg max-w-4xl w-full flex flex-col md:flex-row justify-between items-center p-8 md:p-24">
+        <motion.img
+          src={loginImage}
+          alt="Login"
+          className="w-full md:max-w-md h-auto object-contain rounded-lg shadow-lg mb-8 md:mb-0"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="w-full md:w-1/2"
+        >
+          <h2 className="text-3xl font-bold mb-8 text-gray-800 text-center">
+            Log In
+          </h2>
+          <form onSubmit={onSubmit} className="space-y-4">
+            <div>
+              <input
+                type="text"
+                id="username"
+                placeholder="Username"
+                value={username}
+                onChange={onChange}
+                className="w-full border-b-2 border-purple-500 py-3 px-3 focus:outline-none focus:border-purple-500 rounded-md"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                value={password}
+                onChange={onChange}
+                className="w-full border-b-2 border-purple-500 py-3 px-3 focus:outline-none focus:border-purple-500 rounded-md"
+              />
+            </div>
+            <div>
+              <button
+                type="submit"
+                className="bg-pink-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-pink-600 transition duration-300 w-full"
+              >
+                Log In
+              </button>
+            </div>
+          </form>
+          <p className="mt-4 text-sm text-blue-900 text-center">
+            Don't have an account?
+            <Link to="/signup" className="text-purple-500 ml-1">
+              Sign Up
+            </Link>
+          </p>
+        </motion.div>
+      </div>
     </div>
   );
 };

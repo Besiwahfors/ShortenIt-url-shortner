@@ -11,7 +11,7 @@ import { verifyToken } from "../middlewares/auth.js";
 const router = Router();
 
 // Define routes
-router.post("/", verifyToken, shortenUrl);
+router.post("/shorten-link", verifyToken, shortenUrl);
 
 router.get("/", verifyToken, getAllLinks);
 
