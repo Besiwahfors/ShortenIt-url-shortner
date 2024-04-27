@@ -8,6 +8,8 @@ import Login from "./pages/Login"
 import UserProfile from "./pages/Userprofile";
 import AllLinks from "./pages/AllLinks";
 import ShortenLink from './pages/Shortenlink';
+import UpgradeToProPage from "./pages/UpgradeToPro";
+import QRCodePage from "./pages/QrCode";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/userProfile/:userId" element={<UserProfile />} />
           <Route path="/all-links" element={<AllLinks/>}/>
           <Route path="/shorten-link" element={<ShortenLink/>}/>
+          <Route path="/upgrade" element={<UpgradeToProPage/>}/>
+          <Route path="/qr-code" element={<QRCodePage/>}/>
           
         </Routes>
         <Footer />

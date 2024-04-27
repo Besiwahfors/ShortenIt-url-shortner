@@ -9,4 +9,28 @@ const linkSchema = new mongoose.Schema({
   clicks: { type: Number, default: 0 }
 });
 
-export default mongoose.model('Link', linkSchema);
+const Link = mongoose.model('Link', linkSchema);
+
+const supportTicketSchema = new mongoose.Schema({
+  subject: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  status: {
+    type: String,
+    enum: ['open', 'closed'],
+    default: 'open'
+  }
+});
+
+const SupportTicket = mongoose.model('SupportTicket', supportTicketSchema);
+
+export { Link, SupportTicket, linkSchema };

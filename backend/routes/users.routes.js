@@ -4,6 +4,8 @@ import {
   login,
   getUserInfo,
   logout,
+  // getUserTickets,
+  
 } from "../controllers/user.controller.js";
 import { verifyToken } from "../middlewares/auth.js";
 
@@ -16,6 +18,8 @@ router.post("/register", register);
 router.post("/login", login);
 
 router.get("/me", verifyToken, getUserInfo);
+
+// router.get("/tickets/:userId",verifyToken, getUserTickets);
 
 router.post("/logout", verifyToken, logout);
 

@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-import User from "../models/userModels.js";
+import { User } from "../models/userModels.js";
+
 import bcrypt from "bcryptjs";
 
 // Register new user
@@ -79,6 +80,29 @@ export const getUserInfo = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+ 
+// // fetch tickets based on the user's ID
+// export const getUserTickets = async (req, res) => {
+//   try {
+//     // Retrieve user ID from the route parameters
+//     const userId = req.params.userId;
+
+//     // Find tickets associated with the user ID
+//     const tickets = await Ticket.find({ userId });
+
+//     // Check if tickets exist for the user
+//     if (!tickets || tickets.length === 0) {
+//       return res.status(404).json({ message: "No tickets found for this user" });
+//     }
+
+//     // Return the tickets as a response
+//     res.status(200).json(tickets);
+//   } catch (error) {
+//     console.error("Error in getUserTickets:", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// };
 
 // Logout a logged in user
 export const logout = (req, res) => {

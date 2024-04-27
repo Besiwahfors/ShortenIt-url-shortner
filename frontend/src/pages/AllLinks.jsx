@@ -1,83 +1,71 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import { FaExternalLinkAlt, FaEdit, FaSave, FaTrash } from "react-icons/fa";
+import { FaExternalLinkAlt, FaEdit, FaTrash } from "react-icons/fa";
 
 const AllLinks = () => {
   const [shortenedLinks, setShortenedLinks] = useState([]);
+  const [editId, setEditId] = useState(null);
+  const [newTitle, setNewTitle] = useState("");
 
   useEffect(() => {
-    // Fetch shortened links from backend API
     fetchShortenedLinks();
   }, []);
 
-  const fetchShortenedLinks = () => {
-    // Simulate fetching shortened links from backend API
-
-    setShortenedLinks([
-      {
-        id: 1,
-        name: "",
-        description: "",
-        originalUrl: "https://",
-        shortUrl: "https://",
-        date: "2024-04-16 09:30:00",
-        editedName: false,
-        editedDescription: false,
-      },
-      {
-        id: 2,
-        name: "Example Link 2",
-        description: "This is another example link",
-        originalUrl: "https://example.org",
-        shortUrl: "https://your-shortened-url.com/def456",
-        date: "2024-04-15 13:45:00",
-        editedName: false,
-        editedDescription: false,
-      },
-    ]);
+  const fetchShortenedLinks = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get("http://localhost:4000/api/links/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setShortenedLinks(res.data);
+    } catch (error) {
+      console.error("Error fetching shortened links:", error);
+    }
   };
 
-  const handleEditLink = (id) => {
-    console.log("Edit link with id:", id);
-    setShortenedLinks((prevLinks) =>
-      prevLinks.map((link) =>
-        link.id === id ? { ...link, editing: true } : link
-      )
-    );
+  const handleEdit = (_id, title) => {
+    setEditId(_id);
+    setNewTitle(title);
   };
 
-  const handleSaveLink = (id) => {
-    console.log("Save link with id:", id);
-    setShortenedLinks((prevLinks) =>
-      prevLinks.map((link) =>
-        link.id === id ? { ...link, editing: false } : link
-      )
-    );
+  const handleSaveTitle = async (_id) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `http://localhost:4000/api/links/${id}`,
+        { title: newTitle },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setEditId(null);
+      fetchShortenedLinks();
+    } catch (error) {
+      console.error("Error saving title:", error);
+    }
   };
 
-  const handleDeleteLink = (id) => {
-    console.log("Delete link with id:", id);
-    setShortenedLinks((prevLinks) =>
-      prevLinks.filter((link) => link.id !== id)
-    );
-  };
-
-  const handleNameChange = (id, value) => {
-    setShortenedLinks((prevLinks) =>
-      prevLinks.map((link) =>
-        link.id === id ? { ...link, name: value, editedName: true } : link
-      )
-    );
-  };
-
-  const handleDescriptionChange = (id, value) => {
-    setShortenedLinks((prevLinks) =>
-      prevLinks.map((link) =>
-        link.id === id
-          ? { ...link, description: value, editedDescription: true }
-          : link
-      )
-    );
+  const handleDeleteLink = async (_id) => {
+    try {
+      console.log("Delete link with id:", id);
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:4000/api/links/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setShortenedLinks((prevLinks) =>
+        prevLinks.filter((link) => link.id !== id)
+      );
+      alert("Delete successful");
+    } catch (error) {
+      console.error("Error deleting link:", error);
+    }
   };
 
   return (
@@ -87,25 +75,18 @@ const AllLinks = () => {
         {shortenedLinks.map((link) => (
           <div key={link.id} className="bg-gray-100 rounded-lg shadow-md p-6">
             <h2 className="text-lg font-semibold mb-2 flex items-center">
-              {link.editing ? (
-                <>
-                  <input
-                    type="text"
-                    value={link.name}
-                    onChange={(e) => handleNameChange(link.id, e.target.value)}
-                    className="border-b border-gray-400 mb-1 focus:outline-none"
-                  />
-                  {link.editedName && (
-                    <span className="ml-2 text-sm text-gray-500">
-                      (Edit saved)
-                    </span>
-                  )}
-                </>
+              {editId === link.id ? (
+                <input
+                  type="text"
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  className="border-b border-gray-400 mb-1 focus:outline-none"
+                />
               ) : (
                 <>
-                  {link.name}
+                  {link.title}
                   <button
-                    onClick={() => handleEditLink(link.id)}
+                    onClick={() => handleEdit(link._id, link.title)}
                     className="text-blue-700 font-semibold flex items-center hover:text-blue-900 ml-2"
                   >
                     <FaEdit />
@@ -113,58 +94,29 @@ const AllLinks = () => {
                 </>
               )}
             </h2>
-            <p className="text-gray-600 mb-2 flex items-center">
-              {link.editing ? (
-                <>
-                  <textarea
-                    value={link.description}
-                    onChange={(e) =>
-                      handleDescriptionChange(link.id, e.target.value)
-                    }
-                    className="border border-gray-400 p-1 mb-1 focus:outline-none"
-                  />
-                  {link.editedDescription && (
-                    <span className="ml-2 text-sm text-gray-500">
-                      (Edit saved)
-                    </span>
-                  )}
-                </>
-              ) : (
-                <>
-                  {link.description}
-                  <button
-                    onClick={() => handleEditLink(link.id)}
-                    className="text-pink-600 font-semibold flex items-center hover:text-blue-900 ml-2"
-                  >
-                    <FaEdit />
-                  </button>
-                </>
-              )}
+            
+            <p className="text-gray-600 mb-2">
+              Description: {link.description}
             </p>
             <p className="text-gray-600 mb-2">
-              Original URL: {link.originalUrl}
+              Original URL: {link.longUrl}
             </p>
-            <p className="text-gray-600 mb-2">Shortened URL: {link.shortUrl}</p>
-            <p className="text-gray-600 mb-2">Date Shortened: {link.date}</p>
+            <p className="text-gray-600 mb-2">
+              Shortened URL: {link.shortLink}
+            </p>
+            <p className="text-gray-600 mb-2">
+              Clicks: {link.clicks}
+            </p>
             <div className="flex items-center justify-between">
-              {link.editing && (
-                <button
-                  onClick={() => handleSaveLink(link.id)}
-                  className="text-blue-700 font-semibold flex items-center hover:text-blue-900"
-                >
-                  <FaSave className="mr-1" />
-                  Save
-                </button>
-              )}
               <button
-                onClick={() => handleDeleteLink(link.id)}
+                onClick={() => handleDeleteLink(link._id)}
                 className="text-red-700 font-semibold flex items-center hover:text-red-900"
               >
                 <FaTrash className="mr-1" />
                 Delete
               </button>
               <a
-                href={link.shortUrl}
+                href={link.longUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-700 font-semibold flex items-center hover:text-blue-900"
@@ -172,6 +124,14 @@ const AllLinks = () => {
                 <FaExternalLinkAlt className="mr-1" />
                 Visit Link
               </a>
+              {editId === link.id && (
+                <button
+                  onClick={() => handleSaveTitle(link._id)}
+                  className="text-blue-700 font-semibold flex items-center hover:text-blue-900"
+                >
+                  Save
+                </button>
+              )}
             </div>
           </div>
         ))}

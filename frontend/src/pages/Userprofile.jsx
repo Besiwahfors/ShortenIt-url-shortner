@@ -17,7 +17,7 @@ const UserProfile = () => {
   useEffect(() => {
     fetchUserData();
     fetchShortenedLinks();
-    fetchSupportTickets();
+   
   }, []);
 
   const fetchUserData = async () => {
@@ -56,31 +56,7 @@ const UserProfile = () => {
     }
   };
 
-  const fetchSupportTickets = async () => {
-    try {
-      // Simulated support tickets data
-      const tickets = [
-        {
-          id: 1,
-          title: "Issue with Link",
-          description: "Having trouble accessing the shortened link",
-          status: "Open",
-          date: "2024-04-18",
-        },
-        {
-          id: 2,
-          title: "General Inquiry",
-          description: "Need assistance with account settings",
-          status: "Closed",
-          date: "2024-04-15",
-        },
-      ];
-      setSupportTickets(tickets);
-    } catch (error) {
-      console.error("Error fetching support tickets:", error);
-    }
-  };
-
+ 
   return (
     <div className="flex">
       <DashboardAside className="fixed top-0 left-0 h-full" />

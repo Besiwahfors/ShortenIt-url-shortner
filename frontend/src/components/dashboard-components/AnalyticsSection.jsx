@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const AnalyticsSection = ({ totalClicks, weeklyClickRate, monthlyClicks }) => {
+const AnalyticsSection = () => {
+  const [totalClicks, setTotalClicks] = useState(0);
+  const [weeklyClickRate, setWeeklyClickRate] = useState(0);
+  const [monthlyClicks, setMonthlyClicks] = useState(0);
+
+  useEffect(() => {
+    fetchLinkClicks();
+  }, []);
+
+  const fetchLinkClicks = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get("http://localhost:4000/api/link/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const { totalClicks, weeklyClickRate, monthlyClicks } = res.data;
+      setTotalClicks(totalClicks);
+      setWeeklyClickRate(weeklyClickRate);
+      setMonthlyClicks(monthlyClicks);
+    } catch (error) {
+      console.error("Error fetching link clicks:", error);
+    }
+  };
+
   const formatPercentage = (value) => {
-    return value ? `${value}%` : '0%';
+    return value ? `${value}%` : "0%";
   };
 
   return (
@@ -11,7 +37,7 @@ const AnalyticsSection = ({ totalClicks, weeklyClickRate, monthlyClicks }) => {
       <div className="flex">
         <div className="bg-gray-200 rounded-lg shadow-lg p-6 mr-4 flex-1">
           <h3 className="text-lg font-semibold mb-2">Total Clicks</h3>
-          <p className="text-3xl font-bold">{totalClicks || 0}</p>
+          <p className="text-3xl font-bold">{totalClicks}</p>
         </div>
         <div className="bg-gray-200 rounded-lg shadow-lg p-6 mr-4 flex-1">
           <h3 className="text-lg font-semibold mb-2">Weekly Click Rate</h3>
@@ -19,7 +45,7 @@ const AnalyticsSection = ({ totalClicks, weeklyClickRate, monthlyClicks }) => {
         </div>
         <div className="bg-gray-200 rounded-lg shadow-lg p-6 flex-1">
           <h3 className="text-lg font-semibold mb-2">Monthly Clicks</h3>
-          <p className="text-3xl font-bold">{monthlyClicks || 0}</p>
+          <p className="text-3xl font-bold">{monthlyClicks}</p>
         </div>
       </div>
     </div>

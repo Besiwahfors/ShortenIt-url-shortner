@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaExternalLinkAlt, FaEdit, FaEye} from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaExternalLinkAlt, FaEdit, FaEye } from "react-icons/fa";
 
 const ShortenedLinksSection = () => {
   const [shortenedLinks, setShortenedLinks] = useState([]);
@@ -24,19 +24,11 @@ const ShortenedLinksSection = () => {
     }
   };
 
-  const handleEditLink = (id) => {
-    // Logic for editing link
-    console.log("Edit link with id:", id);
-  };
-
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Your Shortened Links</h2>
-      {shortenedLinks.map((link) => (
-        <div
-          key={link.id}
-          className="bg-gray-200 rounded-lg shadow-lg p-6 mb-4"
-        >
+      {shortenedLinks.slice(0, 2).map((link) => (
+        <div key={link._id} className="bg-gray-200 rounded-lg shadow-lg p-6 mb-4">
           <h3 className="text-lg font-semibold text-gray-800">{link.name}</h3>
           <p className="text-gray-600 mb-2">Clicks: {link.clicks}</p>
           <p className="text-gray-600 mb-2">Description: {link.description}</p>
@@ -62,15 +54,17 @@ const ShortenedLinksSection = () => {
           </div>
         </div>
       ))}
-      <div className="text-center w-52">
-        <Link
-          to="/all-links"
-          className="bg-blue-600 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center space-x-2"
-        >
-          <FaEye />
-          <span>View All Links</span>
-        </Link>
-      </div>
+      {shortenedLinks.length > 2 && (
+        <div className="text-center w-52">
+          <Link
+            to="/all-links"
+            className="bg-pink-600 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-pink-700 transition duration-300 flex items-center justify-center space-x-2"
+          >
+            <FaEye />
+            <span>View All Links</span>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

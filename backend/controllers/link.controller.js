@@ -1,4 +1,4 @@
-import Link from "../models/linkModels.js";
+import {Link,SupportTicket} from "../models/linkModels.js";
 import generateShortCode from "../utils/generateShortcode.js";
 import QRCode from "qrcode";
 
@@ -65,6 +65,33 @@ export const deleteLink = async (req, res) => {
   }
 };
 
+// Get a single shortened link by shortCode
+export const getShortLink = async (req, res) => {
+  try {
+    const { shortCode } = req.params;
+    const link = await Link.findOne({ shortCode });
+    if (!link) {
+      return res.status(404).json({ message: "Short link not found" });
+    }
+    res.json({
+      _id: link._id,
+      userId: link.userId,
+      title: link.title,
+      description: link.description,
+      shortCode: link.shortCode,
+      longUrl: link.longUrl,
+      clicks: link.clicks,
+      shortLink: `${req.protocol}://${req.headers.host}/links/${link.shortCode}`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+
 // Redirect to original URL associated with the short code and increase link clicks
 export const redirectShortLink = async (req, res) => {
   try {
@@ -97,6 +124,19 @@ export const generateQRCode = async (req, res) => {
     res.json({ qrCodeUrl });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Controller function to raise a new support ticket
+export const raiseTicket = async (req, res) => {
+  try {
+    const { subject, description } = req.body;
+    const ticket = new SupportTicket({ subject, description });
+    await ticket.save();
+    res.status(201).json({ message: "Ticket raised successfully", ticket });
+  } catch (error) {
+    console.error("Error raising support ticket:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

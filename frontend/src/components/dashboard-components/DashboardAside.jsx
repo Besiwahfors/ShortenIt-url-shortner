@@ -15,7 +15,7 @@ const DashboardAside = () => {
               </a>
             </li>
             <li>
-              <a href="/shortened-links" className="flex items-center text-gray-300 hover:text-white transition duration-300">
+              <a href="/all-links" className="flex items-center text-gray-300 hover:text-white transition duration-300">
                 <FiLink className="mr-2" />
                 Shortened Links
               </a>
